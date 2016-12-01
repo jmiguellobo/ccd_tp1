@@ -13,7 +13,8 @@ import java.util.Random;
 public class CalculoFeqEntro {
 
 	private final static String ficheiro = "alice29.txt";
-	private final static String path = "/Users/Mig/Dropbox/Mestrado Eng. Informática/1ºAno - 1ºSemestre/Compressão e Codificação de Dados/ficheiros/"
+	
+	private final static String path = "src/resources/"
 			+ ficheiro;
 	private final static Util newUtil = new Util();
 
