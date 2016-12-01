@@ -4,12 +4,12 @@ import java.io.File;
 import java.util.HashMap;
 
 public class ArithmeticAlgorithm {
-	private final static String path = "/Users/Mig/Dropbox/Mestrado Eng. Informática/1ºAno - 1ºSemestre/Compressão e Codificação de Dados/ficheiros/";
-	private final static String lenaFicheiro = "lena.zip";
+	private final static String resourcesPath = "src/resources/";
+	private final static String lenaFicheiro = "Util.java";
 		
 	String filePath;
 	public static void main(String[] args) {
-		new ArithmeticAlgorithm(path+lenaFicheiro).start();
+		new ArithmeticAlgorithm(resourcesPath +lenaFicheiro).start();
 	}
 	public ArithmeticAlgorithm(String filePath) {
 		this.filePath = filePath;
