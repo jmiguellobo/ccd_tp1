@@ -1,18 +1,20 @@
 package pt.isel.ccd.arithmetic;
 
+import java.math.BigDecimal;
+
 /**
  * Created by trinkes on 01/12/2016.
  */
 public class Section {
-    protected double low;
-    protected double high;
+    protected BigDecimal low;
+    protected BigDecimal high;
 
-    Section(double high, double low) {
+    Section(BigDecimal high, BigDecimal low) {
         this.high = high;
         this.low = low;
     }
 
-    boolean isIn(double tag) {
-        return tag < high && tag > low;
+    boolean isIn(BigDecimal tag) {
+        return tag.compareTo(high) < 0 && tag.compareTo(low) > 0;
     }
 }

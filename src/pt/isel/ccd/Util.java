@@ -1,6 +1,10 @@
 package pt.isel.ccd;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -120,16 +124,32 @@ public class Util {
         return (Math.log(x) / Math.log(2));
     }
 
-    public Integer[] readFile(String filePath) {
-        return new Integer[]{0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1};
+    public Byte[] readFile(String filePath) throws IOException {
+        File file = new File(filePath);
+        byte[] bFile = new byte[(int) file.length()];
+        FileInputStream fileInputStream = new FileInputStream(file);
+        fileInputStream.read(bFile);
+        fileInputStream.close();
+
+        return toObjects(bFile);
+//        return new Integer[]{0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1};
     }
 
-    public <T> HashMap<T, Double> calcProbabilities(T[] sequence) {
-        HashMap<T, Double> probabilities = new HashMap<>();
+    private Byte[] toObjects(byte[] bytesPrim) {
+        Byte[] bytes = new Byte[bytesPrim.length];
+
+        int i = 0;
+        for (byte b : bytesPrim) bytes[i++] = b; // Autoboxing
+
+        return bytes;
+    }
+
+    public <T> HashMap<T, BigDecimal> calcProbabilities(T[] sequence) {
+        HashMap<T, BigDecimal> probabilities = new HashMap<>();
         HashMap<T, Integer> occurrences = getOccurrences(sequence);
         for (Map.Entry<T, Integer> entry : occurrences.entrySet()) {
             double probability = entry.getValue() / ((float) sequence.length);
-            probabilities.put(entry.getKey(), probability);
+            probabilities.put(entry.getKey(), new BigDecimal(probability));
         }
 
         return probabilities;

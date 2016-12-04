@@ -2,6 +2,8 @@ package pt.isel.ccd.arithmetic;
 
 import pt.isel.ccd.Util;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -23,31 +25,37 @@ public class ArithmeticAlgorithm {
 
     private void start() {
         Util util = new Util();
-        Integer[] sequence = util.readFile(lenaFile);
-        System.out.println("sequence: " + Arrays.toString(sequence));
-        HashMap<Integer, Double> probabilities = util.calcProbabilities(sequence);
+        try {
+            Byte[] sequence = util.readFile(lenaFile);
+            System.out.println("sequence: " + Arrays.toString(sequence));
+            HashMap<Byte, BigDecimal> probabilities = util.calcProbabilities(sequence);
 
-        System.out.println("Probabilities:");
-        util.printMap(probabilities);
+            System.out.println("Probabilities:");
+            util.printMap(probabilities);
 
-        CodedData coded = encode(sequence, probabilities);
-        List<Integer> originalSequece = decode(coded, probabilities);
-        System.out.println("original Sequece = " + originalSequece.toString());
+            CodedData coded = encode(sequence, probabilities);
+            List<Byte> originalSequece = decode(coded, probabilities);
+            System.out.println("original Sequece = " + originalSequece.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private <T> List<T> decode(CodedData coded, HashMap<T, Double> probabilities) {
-        Interval<T> interval = new Interval<>(0, 1);
+    private <T> List<T> decode(CodedData coded, HashMap<T, BigDecimal> probabilities) {
+        Interval<T> interval = new Interval<>(new BigDecimal(0), new BigDecimal(1));
         List<T> originalSequence = new LinkedList<>();
         for (int i = 0; i < coded.getLength(); i++) {
+            System.out.println(i);
             originalSequence.add(interval.decodeSymbol(probabilities, coded.getTag()));
         }
 
         return originalSequence;
     }
 
-    private <T> CodedData encode(Integer[] sequence, HashMap<T, Double> probabilities) {
-        Interval interval = new Interval<T>(0, 1);
-        for (Integer symbol : sequence) {
+    private <T> CodedData encode(T[] sequence, HashMap<T, BigDecimal> probabilities) {
+        Interval interval = new Interval<T>(new BigDecimal(0), new BigDecimal(1));
+        for (T symbol : sequence) {
+            System.out.println("encoding symbol: " + symbol);
             interval.encodeSymbol(probabilities, symbol);
         }
 
