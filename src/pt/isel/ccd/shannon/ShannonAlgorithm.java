@@ -33,7 +33,7 @@ public class ShannonAlgorithm {
     }
 
     public static void main(String[] args) {
-        int generatedSequenceSize = 60000;
+        int generatedSequenceSize = 300000;
         int order = 0;
         String filePath = FilePaths.lenaFile;
         ShannonAlgorithm shannonAlgorithm = new ShannonAlgorithm(new Util(), new Random(), order,
@@ -62,6 +62,8 @@ public class ShannonAlgorithm {
         List<Byte> generatedSequence = new ArrayList<>();
         for (int i = 0; i < generatedSequenceSize; i++) {
             generateInnerSequence(sequence, generatedSequence);
+            System.out.println("order " + order + " is " + (i * 100 / generatedSequenceSize) + "% " +
+                    "completed ");
         }
         printer.print(getBytes(generatedSequence));
     }
@@ -75,12 +77,8 @@ public class ShannonAlgorithm {
     private void generateInnerSequence(List<Byte> sequence, List<Byte> generatedSequence) {
         int index = pickRandomLetter(sequence);
         generatedSequence.add(sequence.get(index));
-        Byte symbol;
-        int tries = 10;
-        do {
-            symbol = pickRandomLetter(sequence, generatedSequence.subList(generatedSequence.size() - order - 1 > 0 ? generatedSequence.size() - order - 1 : 0, generatedSequence.size()));
-            tries--;
-        } while (symbol == null && tries > 0);
+        Byte symbol = pickRandomLetter(sequence, generatedSequence.subList(generatedSequence
+                .size() - order - 1 > 0 ? generatedSequence.size() - order - 1 : 0, generatedSequence.size()));
         if (symbol != null) {
             generatedSequence.add(symbol);
         }
