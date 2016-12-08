@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class ArithmeticAlgorithm {
 	private final static String resourcesPath = "src/resources/";
-	private final static String lenaFicheiro = "Util.java";
+	private final static String lenaFicheiro = "alice29.txt";
 		
 	String filePath;
 	public static void main(String[] args) {
