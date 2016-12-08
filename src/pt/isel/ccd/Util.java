@@ -1,8 +1,10 @@
 package pt.isel.ccd;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class Util {
 
@@ -72,7 +74,7 @@ public class Util {
 
     }
 
-    public static HashMap<Byte, Double> readFile(File file) {
+    public static HashMap<Byte, Double> readTestingFile(File file) {
         FileInputStream fileInputStream;
         HashMap<Byte, Integer> map = new HashMap<Byte, Integer>();
         HashMap<Byte, Double> pMap = new HashMap<Byte, Double>();
@@ -120,8 +122,27 @@ public class Util {
         return (Math.log(x) / Math.log(2));
     }
 
-    public Integer[] readFile(String filePath) {
+    public Integer[] readTestingFile(String filePath) {
         return new Integer[]{0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1};
+    }
+
+    public List<Byte> readFile(String filePath) {
+        File file = new File(filePath);
+        byte[] bFile = new byte[(int) file.length()];
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            List<Byte> list = new ArrayList<>();
+            for (byte b : bFile) {
+                list.add(b);
+            }
+            return list;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Collections.emptyList();
     }
 
     public <T> HashMap<T, Double> calcProbabilities(T[] sequence) {

@@ -1,5 +1,6 @@
 package pt.isel.ccd.arithmetic;
 
+import pt.isel.ccd.FilePaths;
 import pt.isel.ccd.Util;
 
 import java.util.Arrays;
@@ -8,8 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ArithmeticAlgorithm {
-    private final static String resourcesPath = "src/resources/";
-    private final static String lenaFile = resourcesPath + "alice29.txt";
 
     String filePath;
 
@@ -18,12 +17,12 @@ public class ArithmeticAlgorithm {
     }
 
     public static void main(String[] args) {
-        new ArithmeticAlgorithm(lenaFile).start();
+        new ArithmeticAlgorithm(FilePaths.lenaFile).start();
     }
 
     private void start() {
         Util util = new Util();
-        Integer[] sequence = util.readFile(lenaFile);
+        Integer[] sequence = util.readTestingFile(filePath);
         System.out.println("sequence: " + Arrays.toString(sequence));
         HashMap<Integer, Double> probabilities = util.calcProbabilities(sequence);
 
