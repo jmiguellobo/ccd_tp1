@@ -74,14 +74,15 @@ public class ShannonAlgorithm {
         start();
     }
 
-    private void generateInnerSequence(List<Byte> sequence, List<Byte> generatedSequence) {
+    private <T> void generateInnerSequence(List<T> sequence, List<T> generatedSequence) {
         int index = pickRandomLetter(sequence);
-        generatedSequence.add(sequence.get(index));
-        Byte symbol = pickRandomLetter(sequence, generatedSequence.subList(generatedSequence
-                .size() - order - 1 > 0 ? generatedSequence.size() - order - 1 : 0, generatedSequence.size()));
-        if (symbol != null) {
-            generatedSequence.add(symbol);
+        List<T> aux = new ArrayList<>();
+        aux.add(sequence.get(index));
+        for (int i = 1; i < order; i++) {
+            T pickRandomLetter = pickRandomLetter(sequence, aux);
+            aux.add(pickRandomLetter);
         }
+        generatedSequence.addAll(aux);
     }
 
     private byte[] getBytes(List<Byte> generatedSequence) {
