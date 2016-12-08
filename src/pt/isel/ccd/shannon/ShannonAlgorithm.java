@@ -1,9 +1,10 @@
 package pt.isel.ccd.shannon;
 
 import pt.isel.ccd.FilePaths;
+import pt.isel.ccd.PrintToFile;
+import pt.isel.ccd.Printer;
 import pt.isel.ccd.Util;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,31 +19,33 @@ public class ShannonAlgorithm {
     private int order;
     private String filePath;
     private int generatedSequenceSize;
+    private Printer printer;
 
-    public ShannonAlgorithm(Util util, Random random, int order, String filePath, int generatedSequenceSize) {
+    public ShannonAlgorithm(Util util, Random random, int order, String filePath, int
+            generatedSequenceSize, Printer printer) {
         this.util = util;
         this.random = random;
         this.order = order;
         this.filePath = filePath;
         this.generatedSequenceSize = generatedSequenceSize;
+        this.printer = printer;
     }
 
     public static void main(String[] args) {
         ShannonAlgorithm shannonAlgorithm = new ShannonAlgorithm(new Util(), new Random(), 50,
-                FilePaths.lenaFile, 100);
+                FilePaths.lenaFile, 100, new PrintToFile(FilePaths.outputsPath + "/shannonAlg" +
+                ".txt"));
         shannonAlgorithm.start();
     }
 
     private void start() {
         List<Byte> sequence = util.readFile(filePath);
 
-//        printSymbols(getBytes(sequence));
-
         List<Byte> generatedSequence = new ArrayList<>();
         for (int i = 0; i < generatedSequenceSize; i++) {
             generateInnerSequence(sequence, generatedSequence);
         }
-        printSymbols(getBytes(generatedSequence));
+        printer.print(getBytes(generatedSequence));
     }
 
     private void generateInnerSequence(List<Byte> sequence, List<Byte> generatedSequence) {
@@ -74,9 +77,5 @@ public class ShannonAlgorithm {
 
     private <T> int pickRandomLetter(List<T> sequence) {
         return random.nextInt(sequence.size());
-    }
-
-    void printSymbols(byte[] sequence) {
-        System.out.println(new String(sequence, StandardCharsets.UTF_8));
     }
 }
