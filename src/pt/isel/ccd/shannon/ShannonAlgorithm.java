@@ -6,6 +6,7 @@ import pt.isel.ccd.Printer;
 import pt.isel.ccd.Util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -32,10 +33,27 @@ public class ShannonAlgorithm {
     }
 
     public static void main(String[] args) {
-        ShannonAlgorithm shannonAlgorithm = new ShannonAlgorithm(new Util(), new Random(), 50,
-                FilePaths.lenaFile, 100, new PrintToFile(FilePaths.outputsPath + "/shannonAlg" +
+        int generatedSequenceSize = 60000;
+        int order = 0;
+        String filePath = FilePaths.lenaFile;
+        ShannonAlgorithm shannonAlgorithm = new ShannonAlgorithm(new Util(), new Random(), order,
+                filePath, generatedSequenceSize, new PrintToFile(FilePaths
+                .outputsPath +
+                "/shannonAlg0" +
                 ".txt"));
-        shannonAlgorithm.start();
+        order++;
+        shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
+                "/shannonAlg" +
+                ".txt"));
+        System.out.println(order + " order is done");
+        order++;
+        shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
+                "/shannonAlg" + order + ".txt"));
+        System.out.println(order + " order is done");
+        order++;
+        shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
+                "/shannonAlg" + order + ".txt"));
+        System.out.println(order + " order is done");
     }
 
     private void start() {
@@ -48,10 +66,24 @@ public class ShannonAlgorithm {
         printer.print(getBytes(generatedSequence));
     }
 
+    private void start(int order, Printer printer) {
+        this.order = order;
+        this.printer = printer;
+        start();
+    }
+
     private void generateInnerSequence(List<Byte> sequence, List<Byte> generatedSequence) {
         int index = pickRandomLetter(sequence);
         generatedSequence.add(sequence.get(index));
-        generatedSequence.add(pickRandomLetter(sequence, generatedSequence.subList(generatedSequence.size() - order - 1 > 0 ? generatedSequence.size() - order - 1 : 0, generatedSequence.size())));
+        Byte symbol;
+        int tries = 10;
+        do {
+            symbol = pickRandomLetter(sequence, generatedSequence.subList(generatedSequence.size() - order - 1 > 0 ? generatedSequence.size() - order - 1 : 0, generatedSequence.size()));
+            tries--;
+        } while (symbol == null && tries > 0);
+        if (symbol != null) {
+            generatedSequence.add(symbol);
+        }
     }
 
     private byte[] getBytes(List<Byte> generatedSequence) {
@@ -64,15 +96,14 @@ public class ShannonAlgorithm {
 
     private <T> T pickRandomLetter(List<T> sequence, List<T> symbols) {
         int i = pickRandomLetter(sequence);
-        int j;
-        for (; i < sequence.size() - symbols.size(); i++) {
-            for (j = 0; j < symbols.size(); j++) {
-                if (symbols.get(j).equals(sequence.get(j + i))) {
-                    return sequence.get(i + symbols.size());
-                }
-            }
+        int index = Collections.indexOfSubList(sequence.subList(i, sequence.size()), symbols);
+        if (index < 0) {
+            index = Collections.indexOfSubList(sequence, symbols);
+        } else {
+            index += i;
         }
-        return pickRandomLetter(sequence, symbols);
+        return index + symbols.size() > sequence.size() - 1 || index == -1 ? null : sequence.get
+                (index + symbols.size());
     }
 
     private <T> int pickRandomLetter(List<T> sequence) {

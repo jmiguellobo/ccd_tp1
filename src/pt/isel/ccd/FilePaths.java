@@ -7,4 +7,6 @@ public class FilePaths {
     public final static String outputsPath = "src/outputs/";
     private final static String resourcesPath = "src/resources/";
     public final static String lenaFile = resourcesPath + "alice29.txt";
+    public final static String lenaJpg = resourcesPath + "lena.jpg";
+    public final static String teste = resourcesPath + "teste";
 }
