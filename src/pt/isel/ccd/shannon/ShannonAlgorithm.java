@@ -54,16 +54,28 @@ public class ShannonAlgorithm {
         shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
                 "/shannonAlg" + order + ".txt"));
         System.out.println(order + " order is done");
+        order++;
+        shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
+                "/shannonAlg" + order + ".txt"));
+        System.out.println(order + " order is done");
+        order++;
+        shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
+                "/shannonAlg" + order + ".txt"));
+        System.out.println(order + " order is done");
+        order += 5;
+        shannonAlgorithm.start(order, new PrintToFile(FilePaths.outputsPath +
+                "/shannonAlg" + order + ".txt"));
+        System.out.println(order + " order is done");
     }
 
     private void start() {
         List<Byte> sequence = util.readFile(filePath);
 
         List<Byte> generatedSequence = new ArrayList<>();
-        for (int i = 0; i < generatedSequenceSize; i++) {
+        for (int i = 0; i < generatedSequenceSize / order; i++) {
             generateInnerSequence(sequence, generatedSequence);
-            System.out.println("order " + order + " is " + (i * 100 / generatedSequenceSize) + "% " +
-                    "completed ");
+            System.out.println("order " + order + " is " + (i * 100 / (generatedSequenceSize /
+                    order)) + "% completed ");
         }
         printer.print(getBytes(generatedSequence));
     }
@@ -80,7 +92,9 @@ public class ShannonAlgorithm {
         aux.add(sequence.get(index));
         for (int i = 1; i < order; i++) {
             T pickRandomLetter = pickRandomLetter(sequence, aux);
-            aux.add(pickRandomLetter);
+            if (pickRandomLetter != null) {
+                aux.add(pickRandomLetter);
+            }
         }
         generatedSequence.addAll(aux);
     }
