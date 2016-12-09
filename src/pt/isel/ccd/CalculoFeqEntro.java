@@ -9,32 +9,41 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 public class CalculoFeqEntro {
 
-	private final static String ficheiro = "alice29.txt";
+	private final static String ficheiro = "alice29New.txt.zip";
 	
 	private final static String path = "src/resources/"
 			+ ficheiro;
 	private final static Util newUtil = new Util();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
 		
 		File file = new File(path);
 
+		
 		HashMap<String, Double> pMap = readFile(file);
 
 		// Gerar ficheiro
 
+		 Scanner scan = new Scanner(System.in);
+		int lengIn = Integer.valueOf(scan.next());
+		
+		if(lengIn != 99){
 		try {
-			writeFile(file, pMap);
+			writeFile(file, pMap, lengIn);
 
 		} catch (IOException e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		}
+		
+		
+		
 	}
 
 	public static HashMap<String, Double> readFile(File file) {
@@ -96,11 +105,18 @@ public class CalculoFeqEntro {
 		return H;
 	}
 
-	private static void writeFile(File file, HashMap<String, Double> pMap)
+	private static void writeFile(File file, HashMap<String, Double> pMap, int lengIn)
 			throws FileNotFoundException, IOException {
 		StringBuilder builder = new StringBuilder();
 		byte[] bFile = new byte[(int) file.length()];
-		for (int i = 0; i < bFile.length; i++) {
+		int leng = bFile.length;
+		
+		if(lengIn !=0){
+		
+		leng = lengIn;	
+	    }
+	   
+		for (int i = 0; i < leng; i++) {
 
 			builder.append((char) (getSym(pMap)));
 

@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 public class CalculoHMarkovCh {
 
 	private final static String ficheiro = "alice29.txt";
-	
+	//private final static String ficheiro = "alice29.txtNEWalice29.txt";
 	private final static String path = "src/resources/"
 			+ ficheiro;
 	
@@ -190,7 +190,7 @@ public class CalculoHMarkovCh {
 
 				}
 			} else {
-				return 121;
+				return 70;
 			}
 			return 0;
 
