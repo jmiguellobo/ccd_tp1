@@ -2,48 +2,37 @@ package pt.isel.ccd;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 public class CalculoFeqEntro {
 
-	private final static String ficheiro = "alice29New.txt.zip";
+	private final static String ficheiro = "alice29.txt";
 	
 	private final static String path = "src/resources/"
 			+ ficheiro;
 	private final static Util newUtil = new Util();
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		
 		File file = new File(path);
 
-		
 		HashMap<String, Double> pMap = readFile(file);
 
 		// Gerar ficheiro
 
-		 Scanner scan = new Scanner(System.in);
-		int lengIn = Integer.valueOf(scan.next());
-		
-		if(lengIn != 99){
 		try {
-			writeFile(file, pMap, lengIn);
+			writeFile(file, pMap);
 
 		} catch (IOException e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		}
-		
-		
-		
+
 	}
 
 	public static HashMap<String, Double> readFile(File file) {
@@ -105,18 +94,11 @@ public class CalculoFeqEntro {
 		return H;
 	}
 
-	private static void writeFile(File file, HashMap<String, Double> pMap, int lengIn)
-			throws FileNotFoundException, IOException {
+	private static void writeFile(File file, HashMap<String, Double> pMap)
+			throws IOException {
 		StringBuilder builder = new StringBuilder();
 		byte[] bFile = new byte[(int) file.length()];
-		int leng = bFile.length;
-		
-		if(lengIn !=0){
-		
-		leng = lengIn;	
-	    }
-	   
-		for (int i = 0; i < leng; i++) {
+		for (int i = 0; i < bFile.length; i++) {
 
 			builder.append((char) (getSym(pMap)));
 
