@@ -13,6 +13,6 @@ public class Section {
     }
 
     boolean isIn(double tag) {
-        return tag < high && tag > low;
+        return tag <= high && tag > low;
     }
 }

@@ -2,10 +2,8 @@ package pt.isel.ccd;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -97,7 +95,7 @@ public class CalculoFeqEntro {
 	}
 
 	private static void writeFile(File file, HashMap<String, Double> pMap)
-			throws FileNotFoundException, IOException {
+			throws IOException {
 		StringBuilder builder = new StringBuilder();
 		byte[] bFile = new byte[(int) file.length()];
 		for (int i = 0; i < bFile.length; i++) {

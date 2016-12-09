@@ -21,17 +21,30 @@ public class ArithmeticAlgorithm {
     }
 
     private void start() {
+        int errors = 0;
         Util util = new Util();
-        Integer[] sequence = util.readTestingFile(filePath);
-        System.out.println("sequence: " + Arrays.toString(sequence));
-        HashMap<Integer, Double> probabilities = util.calcProbabilities(sequence);
+//        for (int i = 0; i < 100; i++) {
+        try {
 
-        System.out.println("Probabilities:");
-        util.printMap(probabilities);
+            Integer[] sequence = util.readTestingFile(filePath);
+            System.out.println("sequence: " + Arrays.toString(sequence));
+            HashMap<Integer, Double> probabilities = util.calcProbabilities(sequence);
 
-        CodedData coded = encode(sequence, probabilities);
-        List<Integer> originalSequece = decode(coded, probabilities);
-        System.out.println("original Sequece = " + originalSequece.toString());
+            System.out.println("Probabilities:");
+            util.printMap(probabilities);
+
+            CodedData coded = encode(sequence, probabilities);
+            List<Integer> originalSequece = decode(coded, probabilities);
+            System.out.println("Sequece = " + originalSequece.toString());
+            if (!Arrays.deepEquals(sequence, originalSequece.toArray())) {
+                errors++;
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            errors++;
+        }
+//        }
+        System.out.println("Errors: " + errors);
     }
 
     private <T> List<T> decode(CodedData coded, HashMap<T, Double> probabilities) {

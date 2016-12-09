@@ -33,9 +33,9 @@ public class ShannonAlgorithm {
     }
 
     public static void main(String[] args) {
-        int generatedSequenceSize = 300000;
+        int generatedSequenceSize = 100;
         int order = 0;
-        String filePath = FilePaths.lenaFile;
+        String filePath = FilePaths.lenaZip;
         ShannonAlgorithm shannonAlgorithm = new ShannonAlgorithm(new Util(), new Random(), order,
                 filePath, generatedSequenceSize, new PrintToFile(FilePaths
                 .outputsPath +

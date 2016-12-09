@@ -24,7 +24,8 @@ public class Util {
 
     }
 
-    public static void writeLine(HashMap<String, Double> mapValues, char separators, char customQuote, String path)
+    public static void writeLine(HashMap<String, Double> mapValues, char separators, char customQuote,
+                                 String path)
             throws IOException {
         FileWriter w = new FileWriter(path);
         boolean first = true;
@@ -123,7 +124,24 @@ public class Util {
     }
 
     public Integer[] readTestingFile(String filePath) {
-        return new Integer[]{0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1};
+        List<Integer> teste = new ArrayList<>();
+//        for (int i = 0; i < teste.length; i++) {
+//            teste[i] = new Random().nextInt(2);
+//        }
+
+        int i = 0;
+        teste = set(teste, 0, 10);
+        teste = set(teste, 0, 10);
+        teste = set(teste, 1, 105);
+        Integer[] toReturn = new Integer[teste.size()];
+        return teste.toArray(toReturn);
+    }
+
+    private List<Integer> set(List<Integer> teste, int numberToAdd, int lengthToAdd) {
+        for (int i = 0; i < lengthToAdd; i++) {
+            teste.add(numberToAdd);
+        }
+        return teste;
     }
 
     public List<Byte> readFile(String filePath) {
